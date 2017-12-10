@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.danman.movies.MainActivity;
+import com.example.danman.movies.ui.main.MainActivity;
 
 /**
  * Created by User on 09.12.2017.
