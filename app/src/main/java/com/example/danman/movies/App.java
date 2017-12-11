@@ -21,9 +21,13 @@ public class App extends Application {
     }
 
     public static DbManager getDbManager() {
-        if (sDbManager == null) {
-            sDbManager = new DbManager();
-        }
         return sDbManager;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        sDbManager = new DbManager(this);
+
     }
 }

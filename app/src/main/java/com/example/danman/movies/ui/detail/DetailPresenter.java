@@ -26,9 +26,11 @@ public class DetailPresenter implements DetailContract.Presenter {
         if (movie.isFavorite() == true) {
             mView.showSnackBar(view, R.string.message_added_to_favorite, Snackbar.LENGTH_LONG);
             mView.changeFabIcon(R.drawable.ic_star_fill);
+            mDbManager.saveMovie(movie);
         } else {
             mView.showSnackBar(view, R.string.message_removed_to_favorite, Snackbar.LENGTH_LONG);
             mView.changeFabIcon(R.drawable.ic_star);
+            mDbManager.remove(movie);
         }
     }
 

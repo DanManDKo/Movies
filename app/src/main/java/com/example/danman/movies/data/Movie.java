@@ -7,11 +7,24 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import io.realm.RealmObject;
+
 /**
  * Created by User on 09.12.2017.
  */
 
-public class Movie implements Parcelable {
+public class Movie extends RealmObject implements Parcelable {
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
     @SerializedName("vote_count")
     private long voteCount;
     @SerializedName("id")
@@ -58,19 +71,7 @@ public class Movie implements Parcelable {
         releaseDate = in.readString();
         favorite = in.readByte() != 0;
     }
-
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel in) {
-            return new Movie(in);
-        }
-
-        @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
-
+    public Movie(){}
     public boolean isFavorite() {
         return favorite;
     }

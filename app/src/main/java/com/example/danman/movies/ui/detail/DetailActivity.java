@@ -19,7 +19,6 @@ import com.example.danman.movies.ui.main.MainActivity;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity implements DetailContract.View {
-    private ImageView mIvToolbar;
     private DetailContract.Presenter mPresenter;
     private Movie mMovie;
     private FloatingActionButton mFabFavorite;
@@ -46,7 +45,6 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
     private void initViews() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mIvToolbar = (ImageView) findViewById(R.id.iv_detail);
 
         mFabFavorite = (FloatingActionButton) findViewById(R.id.fab);
         mFabFavorite.setOnClickListener(view -> {
