@@ -1,76 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/recycler_card_margin_top"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.v7.widget.CardView
+    <data>
+
+        <variable
+            name="movie"
+            type="com.example.danman.movies.data.Movie"/>
+
+
+    </data>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/recycler_card_margin_top"
 
-        <android.support.constraint.ConstraintLayout
+        >
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/iv_rv_item_poster"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@mipmap/ic_launcher"
-                />
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:maxLines="2"
-                android:id="@+id/tv_rv_item_title"
-                android:layout_width="179dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="47dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintLeft_toRightOf="@+id/iv_rv_item_poster"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Title"
-                app:layout_constraintRight_toLeftOf="@+id/iv_rv_item_star"
-                android:layout_marginRight="8dp"
-                app:layout_constraintHorizontal_bias="0.0"
-                tools:layout_editor_absoluteY="6dp"/>
+                <ImageView
+                    android:id="@+id/iv_rv_item_poster"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:posterUrl="@{movie.poster}"
+                    tools:src="@mipmap/ic_launcher"
+                    />
 
-            <TextView
-                android:id="@+id/tv_rv_item_overview"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="47dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="3dp"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toRightOf="@+id/iv_rv_item_poster"
-                app:layout_constraintRight_toLeftOf="@+id/iv_rv_item_star"
-                app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_title"
-                tools:text="Overview"/>
+                <TextView
+                    android:id="@+id/tv_rv_item_title"
+                    android:layout_width="179dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="47dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:maxLines="2"
+                    android:text="@{movie.title}"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toRightOf="@+id/iv_rv_item_poster"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_editor_absoluteY="6dp"
+                    tools:text="Title"/>
 
-            <CheckBox
-                android:id="@+id/iv_rv_item_star"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:button="@drawable/checkbox_star_selector"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.48"
-                tools:src="@drawable/ic_star"/>
-        </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_rv_item_overview"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="47dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="3dp"
+                    android:text="@{movie.overview}"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toRightOf="@+id/iv_rv_item_poster"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_rv_item_title"
+                    tools:text="Overview"/>
 
 
-    </android.support.v7.widget.CardView>
+            </android.support.constraint.ConstraintLayout>
 
-</LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+</layout>

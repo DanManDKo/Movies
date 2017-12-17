@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.example.danman.movies.App;
 import com.example.danman.movies.R;
+import com.example.danman.movies.binding_data.BindingMovie;
 import com.example.danman.movies.data.Movie;
 import com.example.danman.movies.databinding.ActivityDetailBinding;
 import com.example.danman.movies.manager.ApiManager;
@@ -23,7 +24,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
     private Movie mMovie;
     private FloatingActionButton mFabFavorite;
 
-    @BindingAdapter({"bind:imageUrl"})
+    @BindingAdapter({"bind:posterUrl"})
     public static void loadImage(ImageView view, String url) {
         Picasso.with(view.getContext())
                 .load(ApiManager.IMAGE_SERVER + url)

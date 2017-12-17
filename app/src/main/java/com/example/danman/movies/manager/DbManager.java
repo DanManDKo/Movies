@@ -6,6 +6,7 @@ import com.example.danman.movies.data.Movie;
 
 import java.util.List;
 
+import io.reactivex.Single;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
@@ -24,24 +25,12 @@ public class DbManager {
     }
 
     public void saveMovie(Movie movie) {
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransactionAsync(realm1 -> realm1.insertOrUpdate(movie));
-        realm.close();
+
     }
 
-    public List<Movie> getAllMovies() {
 
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Movie> results = realm.where(Movie.class).findAll();
-        realm.close();
-        return results;
-    }
 
     public void remove(Movie movie) {
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(realm1 -> {
-            realm.where(Movie.class).equalTo("id", movie.getId()).findAll().deleteAllFromRealm();
-        });
     }
 
 }

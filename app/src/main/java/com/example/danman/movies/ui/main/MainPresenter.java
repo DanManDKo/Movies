@@ -3,6 +3,9 @@ package com.example.danman.movies.ui.main;
 import com.example.danman.movies.manager.ApiManager;
 import com.example.danman.movies.manager.DbManager;
 
+import io.reactivex.Flowable;
+import io.reactivex.Single;
+
 /**
  * Created by User on 09.12.2017.
  */

@@ -1,16 +1,17 @@
 package com.example.danman.movies.ui.main.view_pager;
 
-import android.content.Context;
+import android.databinding.BindingAdapter;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.danman.movies.R;
 import com.example.danman.movies.data.Movie;
+import com.example.danman.movies.databinding.RvItemMoviesBinding;
+import com.example.danman.movies.manager.ApiManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -23,15 +24,20 @@ import java.util.List;
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
     private List<Movie> mMovies;
     private OnItemClickListener mListener;
-    private String mImageServer;
+
     public MoviesAdapter(OnItemClickListener listener) {
         mMovies = new ArrayList<>();
         mListener = listener;
     }
 
-    public void setImageServer(String imageServer) {
-        mImageServer = imageServer;
+    @BindingAdapter({"bind:posterUrl"})
+    public static void loadImage(ImageView view, String url) {
+        Picasso.with(view.getContext())
+                .load(ApiManager.IMAGE_SERVER + url)
+                .placeholder(R.drawable.movie_img)
+                .into(view);
     }
+
 
     public void addAll(List<Movie> movies) {
         mMovies.addAll(movies);
@@ -47,22 +53,16 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_item_movies, parent, false);
-        return new ViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        RvItemMoviesBinding binding = RvItemMoviesBinding.inflate(inflater, parent, false);
+        return new ViewHolder(binding.getRoot());
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Movie movie = mMovies.get(position);
-        holder.itemView.setOnClickListener(view -> mListener.onItemClick(movie));
-        holder.mTvTitle.setText(movie.getTitle());
-        holder.mTvOverview.setText(movie.getOverview());
-        holder.mChbStar.setChecked(movie.isFavorite());
-        holder.mChbStar.setOnCheckedChangeListener((compoundButton, state) -> {
-            mListener.onItemStateChanged(movie, state);
-        });
-        Context context = holder.mIvPoster.getContext();
-        Picasso.with(context).load(mImageServer + movie.getPoster()).placeholder(R.drawable.movie_img).into(holder.mIvPoster);
+        holder.mBinding.setMovie(movie);
+        holder.itemView.setOnClickListener(view ->mListener.onItemClick(movie));
     }
 
     @Override
@@ -72,17 +72,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mIvPoster;
-        private TextView mTvTitle;
-        private TextView mTvOverview;
-        private CheckBox mChbStar;
+        RvItemMoviesBinding mBinding;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mIvPoster = itemView.findViewById(R.id.iv_rv_item_poster);
-            mTvTitle = itemView.findViewById(R.id.tv_rv_item_title);
-            mTvOverview = itemView.findViewById(R.id.tv_rv_item_overview);
-            mChbStar = itemView.findViewById(R.id.iv_rv_item_star);
+            mBinding = DataBindingUtil.bind(itemView);
+
         }
     }
 }

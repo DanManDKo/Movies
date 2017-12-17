@@ -7,7 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
+
 
 /**
  * Created by User on 09.12.2017.
@@ -44,7 +46,7 @@ public class Movie extends RealmObject implements Parcelable {
     @SerializedName("original_title")
     private String originalTitle;
     @SerializedName("genre_ids")
-    private List<Long> genrIds;
+    private RealmList<Long> genrIds;
     @SerializedName("backdrop_path")
     private String backdropPath;
     @SerializedName("adult")
@@ -53,6 +55,7 @@ public class Movie extends RealmObject implements Parcelable {
     private String overview;
     @SerializedName("release_date")
     private String releaseDate;
+
     private boolean favorite;
 
     protected Movie(Parcel in) {
@@ -71,7 +74,10 @@ public class Movie extends RealmObject implements Parcelable {
         releaseDate = in.readString();
         favorite = in.readByte() != 0;
     }
-    public Movie(){}
+
+    public Movie() {
+    }
+
     public boolean isFavorite() {
         return favorite;
     }
@@ -156,7 +162,7 @@ public class Movie extends RealmObject implements Parcelable {
         return genrIds;
     }
 
-    public void setGenrIds(List<Long> genrIds) {
+    public void setGenrIds(RealmList<Long> genrIds) {
         this.genrIds = genrIds;
     }
 
