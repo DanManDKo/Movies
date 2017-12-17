@@ -35,7 +35,7 @@ public class BindingMovie {
         this.poster = movie.getPoster();
         this.originalLanguage = movie.getOriginalLanguage();
         this.originalTitle = movie.getOriginalTitle();
-        this.genrIds = movie.getGenrIds();
+        this.genrIds = movie.getGenreIds();
         this.backdropPath = movie.getBackdropPath();
         this.adult = movie.isAdult();
         this.overview = movie.getOverview();

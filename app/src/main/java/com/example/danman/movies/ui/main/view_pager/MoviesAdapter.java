@@ -1,18 +1,13 @@
 package com.example.danman.movies.ui.main.view_pager;
 
-import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.example.danman.movies.R;
 import com.example.danman.movies.data.Movie;
 import com.example.danman.movies.databinding.RvItemMoviesBinding;
-import com.example.danman.movies.manager.ApiManager;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +24,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         mMovies = new ArrayList<>();
         mListener = listener;
     }
-
-    @BindingAdapter({"bind:posterUrl"})
-    public static void loadImage(ImageView view, String url) {
-        Picasso.with(view.getContext())
-                .load(ApiManager.IMAGE_SERVER + url)
-                .placeholder(R.drawable.movie_img)
-                .into(view);
-    }
-
 
     public void addAll(List<Movie> movies) {
         mMovies.addAll(movies);
@@ -62,7 +48,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Movie movie = mMovies.get(position);
         holder.mBinding.setMovie(movie);
-        holder.itemView.setOnClickListener(view ->mListener.onItemClick(movie));
+        holder.itemView.setOnClickListener(view -> mListener.onItemClick(movie));
     }
 
     @Override
@@ -70,6 +56,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         return mMovies.size();
     }
 
+    public void clear() {
+        if (mMovies != null) {
+            mMovies.clear();
+        }
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         RvItemMoviesBinding mBinding;

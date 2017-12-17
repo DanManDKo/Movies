@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 
 /**
@@ -29,6 +30,7 @@ public class Movie extends RealmObject implements Parcelable {
     };
     @SerializedName("vote_count")
     private long voteCount;
+    @PrimaryKey
     @SerializedName("id")
     private long id;
     @SerializedName("video")
@@ -46,7 +48,7 @@ public class Movie extends RealmObject implements Parcelable {
     @SerializedName("original_title")
     private String originalTitle;
     @SerializedName("genre_ids")
-    private RealmList<Long> genrIds;
+    private RealmList<Long> genreIds;
     @SerializedName("backdrop_path")
     private String backdropPath;
     @SerializedName("adult")
@@ -158,12 +160,12 @@ public class Movie extends RealmObject implements Parcelable {
         this.originalTitle = originalTitle;
     }
 
-    public List<Long> getGenrIds() {
-        return genrIds;
+    public List<Long> getGenreIds() {
+        return genreIds;
     }
 
-    public void setGenrIds(RealmList<Long> genrIds) {
-        this.genrIds = genrIds;
+    public void setGenreIds(RealmList<Long> genreIds) {
+        this.genreIds = genreIds;
     }
 
     public String getBackdropPath() {

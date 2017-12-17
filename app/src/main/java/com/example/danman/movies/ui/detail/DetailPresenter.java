@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.example.danman.movies.R;
 import com.example.danman.movies.data.Movie;
-import com.example.danman.movies.manager.DbManager;
+import com.example.danman.movies.manager.db.DbManager;
 
 /**
  * Created by User on 11.12.2017.
@@ -26,12 +26,13 @@ public class DetailPresenter implements DetailContract.Presenter {
         if (movie.isFavorite() == true) {
             mView.showSnackBar(view, R.string.message_added_to_favorite, Snackbar.LENGTH_LONG);
             mView.changeFabIcon(R.drawable.ic_star_fill);
-//            mDbManager.saveMovie(movie);
+            movie.setFavorite(true);
         } else {
             mView.showSnackBar(view, R.string.message_removed_to_favorite, Snackbar.LENGTH_LONG);
             mView.changeFabIcon(R.drawable.ic_star);
-//            mDbManager.remove(movie);
+            movie.setFavorite(false);
         }
+        mDbManager.insertOrUpdateMovie(movie);
     }
 
     @Override

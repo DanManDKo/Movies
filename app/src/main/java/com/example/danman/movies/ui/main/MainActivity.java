@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private void initViewPager() {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
-        mPopularMovies = PlaceholderFragment.newInstance(ApiManager.IMAGE_SERVER);
+        mPopularMovies =new PlaceholderFragment();
         mFavoriteMovies = new PlaceholderFragment();
         mSectionsPagerAdapter.addFragment(mPopularMovies);
         mSectionsPagerAdapter.addFragment(mFavoriteMovies);

@@ -3,7 +3,7 @@ package com.example.danman.movies;
 import android.app.Application;
 
 import com.example.danman.movies.manager.ApiManager;
-import com.example.danman.movies.manager.DbManager;
+import com.example.danman.movies.manager.db.DbManager;
 
 /**
  * Created by User on 09.12.2017.

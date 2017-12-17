@@ -25,13 +25,13 @@ public class PlaceholderFragment extends Fragment implements OnDataReceiveListen
     private MoviesAdapter mAdapter;
     private OnItemClickListener<Movie> mListener;
 //    TODO remove
-    public static PlaceholderFragment newInstance(String imageServer) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
-        Bundle args = new Bundle();
-        args.putString(KEY_IMAGE_SERVER, imageServer);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public static PlaceholderFragment newInstance(String imageServer) {
+//        PlaceholderFragment fragment = new PlaceholderFragment();
+//        Bundle args = new Bundle();
+//        args.putString(KEY_IMAGE_SERVER, imageServer);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onAttach(Context context) {
@@ -62,6 +62,7 @@ public class PlaceholderFragment extends Fragment implements OnDataReceiveListen
 
     @Override
     public void onDataReceive(List<Movie> data) {
+        mAdapter.clear();
         mAdapter.addAll(data);
         mAdapter.notifyDataSetChanged();
     }
