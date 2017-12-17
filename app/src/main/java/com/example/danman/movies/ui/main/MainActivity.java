@@ -1,13 +1,11 @@
 package com.example.danman.movies.ui.main;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,11 +13,11 @@ import android.view.MenuItem;
 import com.example.danman.movies.App;
 import com.example.danman.movies.R;
 import com.example.danman.movies.data.Movie;
-import com.example.danman.movies.manager.ApiManager;
 import com.example.danman.movies.ui.detail.DetailActivity;
 import com.example.danman.movies.ui.main.view_pager.OnDataReceiveListener;
 import com.example.danman.movies.ui.main.view_pager.OnItemClickListener;
-import com.example.danman.movies.ui.main.view_pager.PlaceholderFragment;
+import com.example.danman.movies.ui.main.view_pager.OnRefreshListener;
+import com.example.danman.movies.ui.main.view_pager.placeholder.PlaceholderFragment;
 import com.example.danman.movies.ui.main.view_pager.SectionsPagerAdapter;
 
 import java.util.List;
@@ -37,16 +35,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-        mPresenter = new MainPresenter(this, App.getApiManager(), App.getDbManager());
+        mPresenter = new MainPresenter(this);
 
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPresenter.onStart();
-    }
+
 
     private void initViews() {
         initToolbar();
@@ -54,10 +48,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         initTabLayout();
     }
 
-    @Override
-    public void setPopularMovies(List<Movie> movies) {
-        ((OnDataReceiveListener) mPopularMovies).onDataReceive(movies);
-    }
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -66,8 +56,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private void initViewPager() {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
-        mPopularMovies =new PlaceholderFragment();
-        mFavoriteMovies = new PlaceholderFragment();
+        mPopularMovies = PlaceholderFragment.newInstance(PlaceholderFragment.TYPE_POPULAR);
+        mFavoriteMovies = PlaceholderFragment.newInstance(PlaceholderFragment.TYPE_FAVORITE);
         mSectionsPagerAdapter.addFragment(mPopularMovies);
         mSectionsPagerAdapter.addFragment(mFavoriteMovies);
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -86,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         return super.onCreateOptionsMenu(menu);
     }
-
 
 
     @Override
@@ -113,9 +102,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void onItemClick(Movie movie) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(EXTRA_MOVIE, movie);
-        startActivity(intent);
+        mPresenter.onItemClick(movie);
+
     }
 
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
 }

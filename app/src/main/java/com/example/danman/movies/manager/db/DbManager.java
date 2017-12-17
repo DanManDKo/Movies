@@ -4,9 +4,9 @@ import android.content.Context;
 
 import com.example.danman.movies.data.Movie;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
@@ -17,13 +17,13 @@ import io.realm.RealmResults;
 
 public class DbManager {
     private static final String DB_NAME = "movies.realm";
-    private Realm mRealmUi;
+    private Realm mRealm;
 
     public DbManager(Context context) {
         Realm.init(context);
         RealmConfiguration config = new RealmConfiguration.Builder().name(DB_NAME).build();
         Realm.setDefaultConfiguration(config);
-        mRealmUi = Realm.getDefaultInstance();
+        mRealm = Realm.getDefaultInstance();
     }
 
     public void saveMovie(Movie movie) {
@@ -56,17 +56,15 @@ public class DbManager {
         executeTransaction(realm -> realm.insertOrUpdate(movie));
     }
 
+    public Flowable<RealmResults<Movie>> getFavoriteMovies() {
+
+        return mRealm.where(Movie.class).equalTo(DbFields.MovieFields.FAVORITE, true).findAllAsync().asFlowable();
+    }
+
     public List<Movie> getMovies() {
-        Realm realm = Realm.getDefaultInstance();
-        List<Movie> movies = new ArrayList<>();
-        try {
-            movies = realm.where(Movie.class).findAll();
-        } finally {
-            if (realm != null) {
-                realm.close();
-            }
-            return movies;
-        }
+        List<Movie> movies = mRealm.where(Movie.class).findAll();
+
+        return movies;
     }
 
 

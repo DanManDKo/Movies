@@ -1,8 +1,13 @@
 package com.example.danman.movies.ui.main;
 
+import android.content.Context;
+import android.content.Intent;
+
 import com.example.danman.movies.data.Movie;
 
 import java.util.List;
+
+import io.realm.RealmResults;
 
 /**
  * Created by User on 09.12.2017.
@@ -10,12 +15,15 @@ import java.util.List;
 
 public interface MainContract {
     interface View {
-        void setPopularMovies(List<Movie> movies);
+        void startActivity(Intent intent);
+
+        Context getContext();
     }
 
     interface Presenter {
         void onDestroy();
 
-        void onStart();
+
+        void onItemClick(Movie movie);
     }
 }
