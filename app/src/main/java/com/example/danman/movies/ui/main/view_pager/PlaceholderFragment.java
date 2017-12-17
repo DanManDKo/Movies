@@ -24,14 +24,14 @@ public class PlaceholderFragment extends Fragment implements OnDataReceiveListen
     private static final String KEY_IMAGE_SERVER = "image_server";
     private MoviesAdapter mAdapter;
     private OnItemClickListener<Movie> mListener;
-
-    public static PlaceholderFragment newInstance(String imageServer) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
-        Bundle args = new Bundle();
-        args.putString(KEY_IMAGE_SERVER, imageServer);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    TODO remove
+//    public static PlaceholderFragment newInstance(String imageServer) {
+//        PlaceholderFragment fragment = new PlaceholderFragment();
+//        Bundle args = new Bundle();
+//        args.putString(KEY_IMAGE_SERVER, imageServer);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onAttach(Context context) {
@@ -47,26 +47,22 @@ public class PlaceholderFragment extends Fragment implements OnDataReceiveListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movies, container, false);
-        Bundle args = getArguments();
-        String server = "";
-        if (args != null) {
-            server = args.getString(KEY_IMAGE_SERVER);
-        }
 
-        initViews(view, server);
+
+        initViews(view);
         return view;
     }
 
-    private void initViews(View view, String imageServer) {
+    private void initViews(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.rv_fragment_movies);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new MoviesAdapter(this);
-        mAdapter.setImageServer(imageServer);
         recyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public void onDataReceive(List<Movie> data) {
+        mAdapter.clear();
         mAdapter.addAll(data);
         mAdapter.notifyDataSetChanged();
     }
@@ -76,8 +72,5 @@ public class PlaceholderFragment extends Fragment implements OnDataReceiveListen
         mListener.onItemClick(movie);
     }
 
-    @Override
-    public void onItemStateChanged(Movie movie, boolean state) {
 
-    }
 }

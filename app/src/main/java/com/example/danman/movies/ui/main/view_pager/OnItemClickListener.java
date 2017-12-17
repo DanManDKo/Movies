@@ -7,5 +7,4 @@ package com.example.danman.movies.ui.main.view_pager;
 public interface OnItemClickListener<T> {
     void onItemClick(T t);
 
-    void onItemStateChanged(T t, boolean state);
 }

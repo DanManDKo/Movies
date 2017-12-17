@@ -80,8 +80,7 @@ public class ApiManager {
     }
 
     public Single<MoviesResponse> getPopularMovies() {
-        return mMoviesService.getPopularMovies(new HashMap<>())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return mMoviesService.getPopularMovies(new HashMap<>());
+
     }
 }

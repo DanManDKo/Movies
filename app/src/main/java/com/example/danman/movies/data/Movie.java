@@ -7,13 +7,30 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+
 /**
  * Created by User on 09.12.2017.
  */
 
-public class Movie implements Parcelable {
+public class Movie extends RealmObject implements Parcelable {
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
     @SerializedName("vote_count")
     private long voteCount;
+    @PrimaryKey
     @SerializedName("id")
     private long id;
     @SerializedName("video")
@@ -31,7 +48,7 @@ public class Movie implements Parcelable {
     @SerializedName("original_title")
     private String originalTitle;
     @SerializedName("genre_ids")
-    private List<Long> genrIds;
+    private RealmList<Long> genreIds;
     @SerializedName("backdrop_path")
     private String backdropPath;
     @SerializedName("adult")
@@ -40,6 +57,7 @@ public class Movie implements Parcelable {
     private String overview;
     @SerializedName("release_date")
     private String releaseDate;
+
     private boolean favorite;
 
     protected Movie(Parcel in) {
@@ -59,17 +77,8 @@ public class Movie implements Parcelable {
         favorite = in.readByte() != 0;
     }
 
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel in) {
-            return new Movie(in);
-        }
-
-        @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
+    public Movie() {
+    }
 
     public boolean isFavorite() {
         return favorite;
@@ -151,12 +160,12 @@ public class Movie implements Parcelable {
         this.originalTitle = originalTitle;
     }
 
-    public List<Long> getGenrIds() {
-        return genrIds;
+    public List<Long> getGenreIds() {
+        return genreIds;
     }
 
-    public void setGenrIds(List<Long> genrIds) {
-        this.genrIds = genrIds;
+    public void setGenreIds(RealmList<Long> genreIds) {
+        this.genreIds = genreIds;
     }
 
     public String getBackdropPath() {

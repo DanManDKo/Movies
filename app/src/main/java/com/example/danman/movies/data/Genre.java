@@ -2,11 +2,13 @@ package com.example.danman.movies.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
+
 /**
  * Created by User on 10.12.2017.
  */
 
-public class Genre {
+public class Genre extends RealmObject {
     @SerializedName("id")
     private long id;
     @SerializedName("name")
