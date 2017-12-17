@@ -41,13 +41,24 @@ public class DbManager {
         } else {
             Realm realm = Realm.getDefaultInstance();
             try {
-                RealmResults<Movie> favorites = realm.where(Movie.class).equalTo(DbFields.MovieFields.FAVORITE, true).findAll();
+
+                filter(movies, realm);
                 insertOrUpdateMovies(movies);
-                insertOrUpdateMovies(favorites);
+
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
             } finally {
                 if (realm != null) {
                     realm.close();
                 }
+            }
+        }
+    }
+
+    private void filter(List<Movie> movies, Realm realm) {
+        for (int i = 0; i < movies.size(); i++) {
+            if (isFavorite(movies.get(i), realm)) {
+                movies.remove(i);
             }
         }
     }
@@ -67,6 +78,12 @@ public class DbManager {
         return movies;
     }
 
+    public boolean isFavorite(Movie movie, Realm realm) {
+        Movie realmMovie = realm.where(Movie.class)
+                .equalTo(DbFields.MovieFields.ID, movie.getId())
+                .equalTo(DbFields.MovieFields.FAVORITE, true).findFirst();
+        return realmMovie == null ? false : true;
+    }
 
     public void remove(Movie movie) {
         executeTransaction(realm -> realm.where(Movie.class).equalTo(DbFields.MovieFields.ID, movie.getId()).findAll().deleteAllFromRealm());

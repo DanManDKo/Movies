@@ -26,6 +26,8 @@ public class PopularPresenter implements PlaceholderContract.Presenter {
     }
 
     private void getMovies() {
+
+
         mApiManager.getPopularMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())

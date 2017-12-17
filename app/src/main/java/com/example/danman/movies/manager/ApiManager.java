@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.util.HashMap;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -83,4 +84,5 @@ public class ApiManager {
         return mMoviesService.getPopularMovies(new HashMap<>());
 
     }
+
 }
