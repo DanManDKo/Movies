@@ -20,8 +20,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     private List<Movie> mMovies;
     private OnItemClickListener mListener;
 
-    public MoviesAdapter(OnItemClickListener listener) {
+    public MoviesAdapter() {
         mMovies = new ArrayList<>();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
 

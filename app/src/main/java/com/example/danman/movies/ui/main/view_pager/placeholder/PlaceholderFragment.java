@@ -83,7 +83,8 @@ public class PlaceholderFragment extends Fragment implements OnItemClickListener
                 mPresenter.onPageChanged(page);
             }
         });
-        mAdapter = new MoviesAdapter(this);
+        mAdapter = new MoviesAdapter();
+        mAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(mAdapter);
     }
 

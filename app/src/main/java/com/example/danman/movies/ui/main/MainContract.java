@@ -2,6 +2,7 @@ package com.example.danman.movies.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.MenuItem;
 
 import com.example.danman.movies.data.Movie;
 
@@ -25,5 +26,7 @@ public interface MainContract {
 
 
         void onItemClick(Movie movie);
+
+        boolean onNavItemSelected(MenuItem item);
     }
 }

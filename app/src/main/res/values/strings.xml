@@ -10,4 +10,13 @@
     <string name="message_added_to_favorite">Added to favorite</string>
     <string name="message_removed_to_favorite">Removed from favorites</string>
     <string name="message_network_unavailable">Network is unavailable</string>
+    <string name="nav_main">Main</string>
+    <string name="nav_genre">Genre</string>
+    <string name="nav_search">Search</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_genre">GenreActivity</string>
 </resources>

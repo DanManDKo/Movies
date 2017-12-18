@@ -19,14 +19,14 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
     private DetailContract.Presenter mPresenter;
     private Movie mMovie;
     private FloatingActionButton mFabFavorite;
-
+    public final static String EXTRA_MOVIE = "extra_movie";
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         initViews();
-        mMovie = getIntent().getParcelableExtra(MainActivity.EXTRA_MOVIE);
+        mMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
         binding.setMovie(mMovie);
 
         mPresenter = new DetailPresenter(this, App.getDbManager());

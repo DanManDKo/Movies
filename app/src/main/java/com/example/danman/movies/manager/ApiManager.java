@@ -31,8 +31,8 @@ public class ApiManager {
     public static final String SERVER = SCHEME + HOSTNAME;
     public static final String IMAGE_HOSTNAME = "image.tmdb.org/t/p/w500";
     public static final String IMAGE_SERVER = SCHEME + IMAGE_HOSTNAME;
-    public static final String QUERI_PAGE = "page";
-    public static final String QUERI_GENRE = "with_genres";
+    public static final String QUERY_PAGE = "page";
+    public static final String QUERY_GENRE = "with_genres";
     private Retrofit mRetrofit;
     private MoviesService mMoviesService;
 
@@ -82,9 +82,13 @@ public class ApiManager {
 
     public Single<MoviesResponse> getPopularMovies(int page) {
         Map<String, Object> map = new HashMap<>();
-        map.put(QUERI_PAGE, page);
+        map.put(QUERY_PAGE, page);
         return mMoviesService.getPopularMovies(map);
 
+    }
+
+    public Single<MoviesResponse> findMovieByName(String name) {
+        return mMoviesService.findMovieByName(name);
     }
 
 }
