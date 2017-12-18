@@ -17,6 +17,8 @@ import com.example.danman.movies.R;
 import com.example.danman.movies.data.Genre;
 import com.example.danman.movies.ui.main.view_pager.OnItemClickListener;
 
+import java.util.List;
+
 public class GenreActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GenreContract.View, OnItemClickListener<Genre> {
     private GenreContract.Presenter mPresenter;
@@ -29,12 +31,16 @@ public class GenreActivity extends AppCompatActivity
         mPresenter = new GenrePresenter(this, App.getApiManager());
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mPresenter.onStart();
+    }
+
     private void initViews() {
         Toolbar toolbar = initToolbar();
         initDrawer(toolbar);
         initRecycler();
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(view -> mPresenter.onFabClick());
     }
 
 
@@ -102,6 +108,13 @@ public class GenreActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void setGenres(List<Genre> genres) {
+        mAdapter.clear();
+        mAdapter.addAll(genres);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

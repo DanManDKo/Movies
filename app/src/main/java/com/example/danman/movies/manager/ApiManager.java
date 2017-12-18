@@ -1,5 +1,7 @@
 package com.example.danman.movies.manager;
 
+import com.example.danman.movies.api.genre.GenreResponse;
+import com.example.danman.movies.api.genre.GenreService;
 import com.example.danman.movies.api.movies.MoviesResponse;
 import com.example.danman.movies.api.movies.MoviesService;
 import com.google.gson.GsonBuilder;
@@ -35,6 +37,7 @@ public class ApiManager {
     public static final String QUERY_GENRE = "with_genres";
     private Retrofit mRetrofit;
     private MoviesService mMoviesService;
+    private GenreService mGenreService;
 
     public ApiManager() {
         initRetrofit();
@@ -52,6 +55,7 @@ public class ApiManager {
 
     private void initServices() {
         mMoviesService = mRetrofit.create(MoviesService.class);
+        mGenreService = mRetrofit.create(GenreService.class);
     }
 
     private GsonConverterFactory createGsonConverter() {
@@ -91,4 +95,7 @@ public class ApiManager {
         return mMoviesService.findMovieByName(name);
     }
 
+    public Single<GenreResponse>getGenres(){
+        return mGenreService.getGenres();
+    }
 }

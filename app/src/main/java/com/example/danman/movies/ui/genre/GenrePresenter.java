@@ -7,6 +7,10 @@ import com.example.danman.movies.R;
 import com.example.danman.movies.manager.ApiManager;
 import com.example.danman.movies.ui.main.MainActivity;
 import com.example.danman.movies.ui.search.SearchActivity;
+import com.example.danman.movies.utils.NetworkUtils;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by User on 18.12.2017.
@@ -34,10 +38,22 @@ public class GenrePresenter implements GenreContract.Presenter {
         }
     }
 
+    @Override
+    public void onStart() {
+        if (NetworkUtils.isOnline(mView.getContext())==false){
+            return;
+        }
+        mApiManager.getGenres()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(genre -> mView.setGenres(genre.getGenres()), throwable -> throwable.printStackTrace());
+    }
+
     private void startActivity(Class clazz) {
         Intent intent = new Intent(mView.getContext(), clazz);
         mView.startActivity(intent);
     }
+
     public void onDestroy() {
         mView = null;
         mApiManager = null;

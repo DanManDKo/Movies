@@ -16,7 +16,7 @@ import retrofit2.http.QueryMap;
 
 public interface MoviesService {
     String POPULAR_MOVIES = "/3/discover/movie?sort_by=popularity.des";
-    String GENRES = "/3/genre/movie/list";
+
     String SEARCH = "/3/search/movie";
 
     @GET(POPULAR_MOVIES)
@@ -25,6 +25,5 @@ public interface MoviesService {
     @GET(SEARCH)
     Single<MoviesResponse> findMovieByName(@Query("query") String name);
 
-    @GET(GENRES)
-    Single<List<Genre>> getGenres();
+
 }
