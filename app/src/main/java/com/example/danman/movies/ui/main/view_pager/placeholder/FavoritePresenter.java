@@ -36,4 +36,9 @@ public class FavoritePresenter implements PlaceholderContract.Presenter {
     public void onRefresh() {
         getMovies();
     }
+
+    @Override
+    public void onPageChanged(int page) {
+
+    }
 }

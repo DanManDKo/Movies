@@ -32,7 +32,6 @@ public class PlaceholderFragment extends Fragment implements OnItemClickListener
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private int mType;
     private PlaceholderContract.Presenter mPresenter;
-
     public static PlaceholderFragment newInstance(int type) {
 
         Bundle args = new Bundle();
@@ -52,6 +51,8 @@ public class PlaceholderFragment extends Fragment implements OnItemClickListener
         }
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,7 +60,6 @@ public class PlaceholderFragment extends Fragment implements OnItemClickListener
         mType = getArguments().getInt(KEY_TYPE);
         if (mType == TYPE_POPULAR) {
             mPresenter = new PopularPresenter(this, App.getDbManager(), App.getApiManager());
-
         } else {
             mPresenter = new FavoritePresenter(this, App.getDbManager());
         }
@@ -75,7 +75,14 @@ public class PlaceholderFragment extends Fragment implements OnItemClickListener
 
     private void initRecycler(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.rv_fragment_movies);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                mPresenter.onPageChanged(page);
+            }
+        });
         mAdapter = new MoviesAdapter(this);
         recyclerView.setAdapter(mAdapter);
     }

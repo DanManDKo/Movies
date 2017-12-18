@@ -6,11 +6,9 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
-import io.reactivex.Flowable;
 import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -33,6 +31,8 @@ public class ApiManager {
     public static final String SERVER = SCHEME + HOSTNAME;
     public static final String IMAGE_HOSTNAME = "image.tmdb.org/t/p/w500";
     public static final String IMAGE_SERVER = SCHEME + IMAGE_HOSTNAME;
+    public static final String QUERI_PAGE = "page";
+    public static final String QUERI_GENRE = "with_genres";
     private Retrofit mRetrofit;
     private MoviesService mMoviesService;
 
@@ -80,8 +80,10 @@ public class ApiManager {
                 .build();
     }
 
-    public Single<MoviesResponse> getPopularMovies() {
-        return mMoviesService.getPopularMovies(new HashMap<>());
+    public Single<MoviesResponse> getPopularMovies(int page) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(QUERI_PAGE, page);
+        return mMoviesService.getPopularMovies(map);
 
     }
 

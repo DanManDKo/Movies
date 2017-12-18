@@ -5,7 +5,6 @@ import com.example.danman.movies.data.Genre;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
@@ -19,7 +18,7 @@ public interface MoviesService {
     String GENRES = "/genre/movie/list";
 
     @GET(POPULAR_MOVIES)
-    Single<MoviesResponse> getPopularMovies(@QueryMap Map<String, String> queries);
+    Single<MoviesResponse> getPopularMovies(@QueryMap Map<String, Object> queries);
 
 
     @GET(GENRES)

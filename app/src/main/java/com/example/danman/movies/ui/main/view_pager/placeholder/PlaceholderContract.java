@@ -1,5 +1,7 @@
 package com.example.danman.movies.ui.main.view_pager.placeholder;
 
+import android.content.Context;
+
 import com.example.danman.movies.data.Movie;
 
 import java.util.List;
@@ -11,6 +13,9 @@ import java.util.List;
 public interface PlaceholderContract {
     interface View {
         void setMovies(List<Movie>movies);
+
+        Context getActivity();
+
     }
 
     interface Presenter {
@@ -19,5 +24,7 @@ public interface PlaceholderContract {
         void onDestroy();
 
         void onRefresh();
+
+        void onPageChanged(int page);
     }
 }

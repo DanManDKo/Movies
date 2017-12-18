@@ -2,6 +2,7 @@ package com.example.danman.movies.ui.main.view_pager.placeholder;
 
 import com.example.danman.movies.manager.ApiManager;
 import com.example.danman.movies.manager.db.DbManager;
+import com.example.danman.movies.utils.NetworkUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -14,6 +15,7 @@ public class PopularPresenter implements PlaceholderContract.Presenter {
     private PlaceholderContract.View mView;
     private DbManager mDbManager;
     private ApiManager mApiManager;
+    private int mPage;
 
     public PopularPresenter(PlaceholderContract.View view, DbManager dbManager, ApiManager apiManager) {
         mView = view;
@@ -22,13 +24,24 @@ public class PopularPresenter implements PlaceholderContract.Presenter {
     }
 
     public void onCreate() {
-        getMovies();
+        mPage = 1;
+        getMovies(mPage);
     }
 
-    private void getMovies() {
+    private void getMovies(int page) {
+        if (NetworkUtils.isOnline(mView.getActivity())) {
+            getMoviesFullCycle(page);
+        } else {
+            getCachedMovies();
+        }
+    }
 
+    private void getCachedMovies() {
+        mView.setMovies(mDbManager.getMovies());
+    }
 
-        mApiManager.getPopularMovies()
+    private void getMoviesFullCycle(int page) {
+        mApiManager.getPopularMovies(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
                 .map(moviesResponse -> {
@@ -44,8 +57,14 @@ public class PopularPresenter implements PlaceholderContract.Presenter {
     }
 
     @Override
+    public void onPageChanged(int page) {
+        mPage = page;
+        getMovies(page);
+    }
+
+    @Override
     public void onRefresh() {
-        getMovies();
+        getMovies(mPage);
     }
 
     @Override
